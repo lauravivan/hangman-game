@@ -24,11 +24,22 @@ class Connection {
   offer(ws: HangmanWebSocket, username: string, offer: string) {
     if (!username) this.throwUserNotFound();
 
-    console.log(this.users)
+    console.log("Sending offer to:", username);
 
     if (this.users[username]) {
       ws.otherUsername = username;
-      this.messanger.offer(ws, offer, username);
+      this.messanger.offer(this.users[username], offer);
+    }
+  }
+
+  answer(ws: HangmanWebSocket, username: string, answer: string) {
+    if (!username) this.throwUserNotFound();
+
+    console.log("Sending answer to: ", username);
+
+    if (this.users[username]) {
+      ws.otherUsername = username;
+      this.messanger.answer(this.users[username], answer);
     }
   }
 
