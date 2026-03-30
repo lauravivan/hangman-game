@@ -1,4 +1,4 @@
-# hangman-server
+# hangman-game
 
 ## Summary
 
