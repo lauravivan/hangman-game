@@ -1,33 +1,24 @@
 # hangman-game
 
-## Summary
+This is a default hangman game built upon technologies such as WebRTC, Coturn and Signaling Server. 
 
-- [WebRTC intro](#WebRTC-Web-Real-Time-Communication)
-  - [WebRTC APIs](#WebRTC-APIs)
-- [Peer-to-peer](#Peer-to-Peer)
-  - [Signaling server](#Signaling-server)
-    - [EC2 AWS TURN-server](#TURN-server-build-with-EC2-AWS)
+## Architecture
 
-## WebRTC (Web Real-Time Communication)
+<div align="center">
+  <img src="/docs/assets/turn-stun-server.jpeg" alt="Explanation of Turn and Stun server in WebRTC" width="500px" />
+</div>
+
+### WebRTC (Web Real-Time Communication)
 
 WebRTC is an open-source project maintained by companies like Google, Apple, Amazon, etc. that lets you add real-time communication capabilities to web and mobile applications. It supports video, voice, and generic data to be sent between peers. It's available on all modern browsers as well as on native clients for all major platforms.
 
-The two organizations that control the standards for WebRTC are **The World Wide Web Consortium (W3C)** and the **Internet Engineering Task Force (IETC).**
-
 Real-Time communications need low-latency (time it takes for data to travel from a device to a server and back), under 50ms for smooth, real-time activities, while over 100ms causes noticeable lag.
 
-### WebRTC APIs
+Follow this [code lab](https://codelabs.developers.google.com/codelabs/webrtc-web#0). 
 
-The WebRTC standard covers, on a high level, two different technologies: media capture devices (it can include video cameras, microphones and screen capturing devices) and peer-to-peer connectivity.
+[WebRTC](https://webrtc.org/).
 
-- Video cameras and microphones use `navigator.mediaDevices.getUserMedia()` to capture `MediaStreams`
-- Screen recording uses `navigator.mediaDevices.getDisplayMedia()`
-
-Peer-to-peer connectivity is handled by the `RTCPeerConnection` interface. This is the central point for establishing and controlling the connection between two peers in WebRTC.
-
-[WebRTC](https://webrtc.org/)
-
-## Peer-to-peer
+#### Peer-to-peer
 
 It's a distributed computing architecture in which participants share part of their own resources, such as processing power, storage, or network capacity.
 
@@ -43,15 +34,15 @@ In order to discover how two peers can connect, both clients need to provide an 
   <img src="/docs/assets/webrtc-vs-websockets.png" alt="Explanation of the difference between WebRTC and WebSockets" width="500px" />
 </div>
 
-WebSockets:
+[WebRTC - peer connections](https://webrtc.org/getting-started/peer-connections)
+
+#### WebSockets
 
 Two-way channels over a single, persistent TCP connection, enabling real-time, low latency data exchange between clients like web browsers and servers, unlike traditional HTTP’s request-response model, making them ideal for live chats, gaming and financial updates
 
 WebSocket protocol supports SSL similar to how HTTP supports HTTPS, using wss:// to connect securely.
 
 WebSockets are ideal for creating signaling server since it is reliable. Signals are less likely to get dropped between users, giving more successful connections. 
-
-[WebRTC - peer connections](https://webrtc.org/getting-started/peer-connections)
 
 ### Signaling server
 
@@ -99,17 +90,17 @@ Once they have the ID and can make an offer, candidates are sent between clients
 
 To leave the connection, the user can send a leave message. 
 
-#### TURN-server build with AWS EC2 and Coturn
+### TURN-Server (Traversal Using Relays around NAT)
 
-<div align="center">
-  <img src="/docs/assets/turn-stun-server.jpeg" alt="Explanation of Turn and Stun server in WebRTC" width="500px" />
-</div>
+Unlike STUN servers, which assist in direct peer-to-peer connectivity, TURN servers relay data when direct connections fail. They ensure seamless connectivity, even in restrictive networks.
+
+Follow the [tutorial](https://medium.com/@dushyantsom60/building-a-reliable-turn-server-on-azure-for-scalable-webrtc-applications-5183d646599a)
+
+**Building a TURN-server with Coturn and EC2**
 
 > EC2 stands for Elastic Compute Cloud. It offers more than 750 instances and a range of processors, storage, network, OS.
 
 [AWS docs](https://docs.aws.amazon.com/)
-
-**Building a TURN-server**
 
 1. The VM, our server in the cloud for hangman-game, exists on AWS EC2 instance. In this process, we create: 
   - Security groups that orchastrate the TCP and UDP connections later used to communicate with the turn server.
@@ -130,8 +121,6 @@ WebRTC gives us a page that can test our turn server availability:
 [The WebSocket API (WebSockets) - Web APIs | MDN](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
 
 [Build a Signaling Server for Simple-Peer](https://javascript.plainenglish.io/building-a-signaling-server-for-simple-peer-f92d754edc85)
-
-[Real time communication with WebRTC  |  Google Codelabs](https://codelabs.developers.google.com/codelabs/webrtc-web#0)
 
 [webrtc-books/2. Learning WebRTC.pdf at master · codeyu/webrtc-books](https://github.com/codeyu/webrtc-books/blob/master/2.%20Learning%20WebRTC.pdf)
 
